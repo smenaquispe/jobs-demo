@@ -14,6 +14,8 @@ return [
     */
 
     'default' => env('QUEUE_CONNECTION', 'database'),
+    'queue2' => env('QUEUE_CONNECTION', 'redis'),
+    'queue3' => env('QUEUE_CONNECTION', 'redis'),
 
     /*
     |--------------------------------------------------------------------------
