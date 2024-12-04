@@ -93,22 +93,58 @@
     
     <div x-data="jobDispatcher()" class="p-8">
         <h1 class="text-2xl font-semibold mb-4">Despachar Jobs en Diferentes Colas</h1>
+        
+        <!-- Selector para elegir la cola -->
+        <div class="mb-4">
+            <label for="queue" class="block text-sm font-medium text-gray-700">Selecciona una Cola</label>
+            <select id="queue" x-model="selectedQueue" class="mt-2 p-2 border rounded-lg w-full">
+                <option value="default">Default</option>
+                <option value="queue2">Queue2</option>
+                <option value="queue3">Queue3</option>
+            </select>
+        </div>
     
-        <!-- Button to Dispatch Job to Default Queue -->
-        <button @click="dispatchJob('api/dispatch-job')" class="button button-blue">
-            Despachar Job en Cola Default
+        <!-- Botón para despachar JobA en la cola seleccionada -->
+        <button @click="dispatchJob('api/dispatch-any-job?job=JobA&queue=' + selectedQueue)" class="button button-blue">
+            Despachar JobA
         </button>
         
-        <!-- Button to Dispatch Job to Queue2 -->
-        <button @click="dispatchJob('api/dispatch-job-queue2')" class="button mt-4">
-            Despachar Job en Cola Queue2
+        <!-- Botón para despachar JobB en la cola seleccionada -->
+        <button @click="dispatchJob('api/dispatch-any-job?job=JobB&queue=' + selectedQueue)" class="button mt-4">
+            Despachar JobB
         </button>
     
-        <!-- Response Message -->
+        <!-- Respuesta -->
         <div x-show="responseMessage" class="message mt-4">
             <p x-text="responseMessage"></p>
         </div>
     </div>
+
+    <!-- Segundo bloque: despachar un Job personalizado -->
+    <div x-data="customJobDispatcher()" class="p-8">
+        <h1 class="text-2xl font-semibold mb-4">Despachar Job Personalizado</h1>
+        
+        <!-- Selector de cola -->
+        <select x-model="selectedQueue" class="border p-2 rounded">
+            <option value="default">Default</option>
+            <option value="queue2">Queue2</option>
+            <option value="queue3">Queue3</option>
+        </select>
+        
+        <!-- Selector de tiempo -->
+        <input x-model="jobTime" type="number" class="border p-2 rounded" placeholder="Tiempo (en segundos)" />
+
+        <!-- Botón para despachar el job personalizado -->
+        <button @click="dispatchCustomJob" class="button button-blue mt-4">
+            Despachar Job Personalizado
+        </button>
+
+        <!-- Respuesta -->
+        <div x-show="responseMessage" class="message mt-4">
+            <p x-text="responseMessage"></p>
+        </div>
+    </div>
+    
     
     <div x-data="jobsPeding()" class="p-4">
         <h2 class="text-lg font-semibold mb-4">Jobs Pendientes</h2>
@@ -165,8 +201,9 @@
     
 
     <script>
-        function jobDispatcher() {
+            function jobDispatcher() {
             return {
+                selectedQueue: 'default', // Valor predeterminado de la cola seleccionada
                 responseMessage: '',
                 async dispatchJob(route) {
                     try {
@@ -184,6 +221,32 @@
                     }
                 }
             }
+        }
+
+        
+        function customJobDispatcher() {
+            return {
+                responseMessage: '',
+                selectedQueue: 'default', // Cola predeterminada
+                jobTime: 0, // Tiempo por defecto
+
+                async dispatchCustomJob() {
+                    const route = `api/dispatch-custom-job?queue=${this.selectedQueue}&time=${this.jobTime}`;
+                    try {
+                        const response = await fetch(route, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+
+                        const data = await response.json();
+                        this.responseMessage = data.message;
+                    } catch (error) {
+                        this.responseMessage = 'Error al despachar el job personalizado';
+                    }
+                }
+            };
         }
 
         function jobsPeding() {
