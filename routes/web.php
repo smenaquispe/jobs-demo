@@ -15,6 +15,10 @@ Route::get('/jobs', function () {
     return view('jobs');
 })->middleware(['auth', 'verified'])->name('jobs');
 
+Route::get('/chains', function () {
+    return view('chains');
+})->middleware(['auth', 'verified'])->name('chain');
+
 
 Route::get('/batches', function () {
     return view('batches');

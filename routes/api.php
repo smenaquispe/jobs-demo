@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobsController;
 use App\Http\Controllers\WorkerController;
 use App\Http\Controllers\BatchController;
+use App\Http\Controllers\ChainController;
 
 Route::get('dispatch-job', [JobsController::class, 'dispatchJobAInDefaultQueue']);
 Route::get('dispatch-job-queue2', [JobsController::class, 'dispatchJobAInQueue']);
@@ -17,3 +18,6 @@ Route::get('dispatch-custom-job', [JobsController::class, 'dispatchCustomJob']);
 Route::get('dispatch-batch', [BatchController::class, 'dispatchBatch']);
 Route::get('cancel-batch', [BatchController::class, 'cancelBatch']);
 Route::get('get-batches', [BatchController::class, 'getBatches']);
+
+// Chain
+Route::get('dispatch-chain', [ChainController::class, 'dispatchChain']);
