@@ -16,6 +16,12 @@ Route::get('/jobs', function () {
 })->middleware(['auth', 'verified'])->name('jobs');
 
 
+Route::get('/batches', function () {
+    return view('batches');
+})->middleware(['auth', 'verified'])->name('batches');
+
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

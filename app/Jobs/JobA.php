@@ -2,12 +2,13 @@
 
 namespace App\Jobs;
 
+use Illuminate\Bus\Batchable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 
 class JobA implements ShouldQueue
 {
-    use Queueable;
+    use Queueable, Batchable;
 
     /**
      * Create a new job instance.
