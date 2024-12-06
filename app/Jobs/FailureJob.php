@@ -7,11 +7,13 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 
-class JobA implements ShouldQueue
+class FailureJob implements ShouldQueue
 {
-    use Queueable, Batchable, Dispatchable, InteractsWithQueue, SerializesModels;
+    use Dispatchable, Queueable, Batchable;
+
+    public $tries = 3;
+    public $backoff = 5;
 
     /**
      * Create a new job instance.
@@ -26,8 +28,6 @@ class JobA implements ShouldQueue
      */
     public function handle(): void
     {
-        info('JobA started in queue: ' . $this->queue);
-        sleep(3);
-        info('JobA executed successfully in queue: ' . $this->queue);
+        throw new \Exception('Job failed');
     }
 }

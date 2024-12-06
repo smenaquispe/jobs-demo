@@ -167,7 +167,7 @@
                 // Método para despachar el chain con la lista de trabajos
                 async dispatchChain() {
                     if (this.jobs.length === 0) {
-                        alert('Please add at least one job to the list.');
+                        alert('Please add at least one job t    o the list.');
                         return;
                     }
 

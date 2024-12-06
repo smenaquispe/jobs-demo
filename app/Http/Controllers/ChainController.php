@@ -24,4 +24,17 @@ class ChainController extends Controller
             'chain' => $chain,
         ]);
     }
+
+    public function dispatchChainWithFailure(Request $request)
+    {
+        $queue = $request->query('queue', 'default');  // Obtener la cola
+
+        // Procesar el chain
+        $chain = $this->chainService->dispatchChainWithFailure($queue);
+
+        // Devolver la respuesta con el ID del chain
+        return response()->json([
+            'chain' => $chain,
+        ]);
+    }
 }

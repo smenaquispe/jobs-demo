@@ -54,4 +54,30 @@ class JobsController extends Controller
 
         return response()->json(['message' => 'Custom job dispatched successfully']);
     }
+
+    public function dispatchFailureJob(Request $request)
+    {
+        $validated = $request->validate([
+            'queue' => 'required|string|in:default,queue2,queue3', // Validar que la cola esté permitida
+        ]);
+
+        $queue = $validated['queue'];
+
+        $this->jobsService->dispatchFailureJob($queue);
+
+        return response()->json(['message' => 'Failure job dispatched successfully']);
+    }
+
+    public function dispatchAutoReleaseJob(Request $request)
+    {
+        $validated = $request->validate([
+            'queue' => 'required|string|in:default,queue2,queue3', // Validar que la cola esté permitida
+        ]);
+
+        $queue = $validated['queue'];
+
+        $this->jobsService->disptachAutoReleaseJob($queue);
+
+        return response()->json(['message' => 'AutoRelease job dispatched successfully']);
+    }
 }

@@ -4,6 +4,8 @@ namespace App\Services;
 
 use Illuminate\Bus\Batch;
 use Illuminate\Support\Facades\Bus;
+use App\Jobs\JobA;
+use App\Jobs\FailureJob;
 
 class BatchService
 {
@@ -39,5 +41,17 @@ class BatchService
             $batches[] = $batch;
         }
         return $batches;
+    }
+
+    public function dispatchBatchWithFailure($queue)
+    {
+        $jobs = [
+            new JobA(),
+            new FailureJob(),
+            new JobA(),
+        ];
+
+        $batch = Bus::batch($jobs)->onQueue($queue)->dispatch();
+        return $batch;
     }
 }

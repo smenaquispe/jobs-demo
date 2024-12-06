@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Jobs\JobA;
 use App\Jobs\JobB;
 use App\Jobs\CustomJob;
+use App\Jobs\FailureJob;
+use App\Jobs\AutoReleaseJob;
 use Illuminate\Contracts\Queue\Job;
 
 class JobsService
@@ -28,5 +30,15 @@ class JobsService
     public function dispatchCustomJob(string $queue, int $time)
     {
         dispatch(new CustomJob($time))->onQueue($queue);
+    }
+
+    public function dispatchFailureJob(string $queue)
+    {
+        dispatch(new FailureJob())->onQueue($queue);
+    }
+
+    public function disptachAutoReleaseJob(string $queue)
+    {
+        dispatch(new AutoReleaseJob())->onQueue($queue);
     }
 }

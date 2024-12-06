@@ -50,4 +50,17 @@ class BatchController extends Controller
             'batches' => $batches,
         ]);
     }
+
+    public function dispatchBatchWithFailure(Request $request)
+    {
+        $queue = $request->query('queue', 'default');  // Obtener la cola
+
+        // Procesar el batch
+        $batch = $this->batchService->dispatchBatchWithFailure($queue);
+
+        // Devolver la respuesta con el ID del batch
+        return response()->json([
+            'batchId' => $batch->id,
+        ]);
+    }
 }

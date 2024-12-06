@@ -114,6 +114,15 @@
             Despachar JobB
         </button>
     
+        <button @click="dispatchJob('api/dispatch-failure-job?queue=' + selectedQueue)" class="button button-blue mt-4">
+            Despachar FailureJob
+        </button>
+    
+        <button @click="dispatchJob('api/dispatch-auto-release-job?queue=' + selectedQueue)" class="button button-blue mt-4">
+            Despachar AutoReleaseJob
+        </button>
+    
+
         <!-- Respuesta -->
         <div x-show="responseMessage" class="message mt-4">
             <p x-text="responseMessage"></p>
