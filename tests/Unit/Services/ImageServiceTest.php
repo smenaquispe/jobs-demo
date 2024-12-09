@@ -125,3 +125,26 @@ it('can send emails', function () {
     app()->call([new SendEmailJob($images->toArray(), "example@example.com"), 'handle']);
     Mail::assertSent(SendImagesEmail::class, 'example@example.com');
 });
+
+
+it('job make 3 attemps', function () {
+    $image = Image::factory()->create([
+        'path' => 'images/test_image.jpg',
+    ]);
+
+    $job = new ConvertImageJob($image, 'png');
+
+    // Simular múltiples intentos manualmente
+    $attempts = 0;
+
+    while ($attempts < $job->tries) {
+        try {
+            $job->handle();
+        } catch (NotImagePathFoundException $exception) {
+            $attempts++;
+            sleep($job->backoff);
+        }
+    }
+
+    $this->assertEquals($job->tries, $attempts);
+});
