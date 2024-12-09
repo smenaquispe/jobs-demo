@@ -74,6 +74,13 @@ return [
             'after_commit' => false,
         ],
 
+        'remote' => [
+            'driver' => 'redis',
+            'connection' => 'remote',
+            'queue' => env('REDIS_REMOTE_QUEUE', 'default'),
+            'retry_after' => (int) env('REDIS_QUEUE_RETRY_AFTER', 90),
+        ],
+
     ],
 
     /*

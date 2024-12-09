@@ -24,3 +24,7 @@ Route::get('dispatch-batch-with-failure', [BatchController::class, 'dispatchBatc
 // Chain
 Route::get('dispatch-chain', [ChainController::class, 'dispatchChain']);
 Route::get('dispatch-chain-with-failure', [ChainController::class, 'dispatchChainWithFailure']);
+
+
+
+Route::get('dispatch-in-remote-connection', [JobsController::class, 'dispatchInRemoteConnection']);

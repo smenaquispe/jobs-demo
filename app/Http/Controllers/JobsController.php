@@ -80,4 +80,11 @@ class JobsController extends Controller
 
         return response()->json(['message' => 'AutoRelease job dispatched successfully']);
     }
+
+    public function dispatchInRemoteConnection()
+    {
+        $this->jobsService->dispatchInRemoteConnection();
+
+        return response()->json(['message' => 'JobA dispatched in remote connection']);
+    }
 }

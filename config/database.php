@@ -112,12 +112,6 @@ return [
             // 'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'false'),
         ],
 
-        'remote' => [
-            'host' => env('REDIS_REMOTE_HOST', '0.0.0.0'),  // IP de la otra computadora
-            'password' => env('REDIS_PASSWORD', null),
-            'port' => env('REDIS_REMOTE_PORT', 6379),
-            'database' => env('REDIS_DB', 0),
-        ],
 
     ],
 
@@ -173,6 +167,13 @@ return [
             'password' => env('REDIS_PASSWORD'),
             'port' => env('REDIS_PORT', '6379'),
             'database' => env('REDIS_CACHE_DB', '1'),
+        ],
+
+        'remote' => [
+            'host' => env('REDIS_REMOTE_HOST', '0.0.0.0'),  // IP de la otra computadora
+            'password' => env('REDIS_PASSWORD', null),
+            'port' => env('REDIS_REMOTE_PORT', 6379),
+            'database' => env('REDIS_DB', 0),
         ],
 
     ],

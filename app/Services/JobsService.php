@@ -41,4 +41,9 @@ class JobsService
     {
         dispatch(new AutoReleaseJob())->onQueue($queue);
     }
+
+    public function dispatchInRemoteConnection()
+    {
+        dispatch(new JobA())->onConnection('remote');
+    }
 }
